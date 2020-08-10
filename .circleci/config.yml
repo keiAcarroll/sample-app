@@ -3,6 +3,9 @@ jobs:
   build:
     docker:
       - image: circleci/php:7.2-node-browsers
+    environment:
+      - APP_DEBUG: true
+      - APP_ENV: testing
 
     steps:
       - checkout
@@ -37,6 +40,8 @@ jobs:
       # - run: php artisan migrate --env=testing --database=sqlite_testing --force
 
       - run: php artisan key:generate
+      - run: php artisan migrate
+      
       - run: ./vendor/bin/phpunit
       
       # - run: ./vendor/bin/codecept build
